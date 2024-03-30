@@ -16,6 +16,18 @@ resource "aws_lb_target_group" "component" {
   }
 }
 
+# Steps for provisioning autoscaling
+
+# 1. Create one instance
+# 2. Provision with ansible/shell
+# 3. Stop the instance
+# 4. Take AMI
+# 5. Delete the instance
+# 6. Create launch template with AMI
+# 7. Create autoscaling group
+# 8. Load Balancer rule
+# 9. Add autoscaling policy
+
 module "component" {
   source                 = "terraform-aws-modules/ec2-instance/aws"
   ami                    = data.aws_ami.centos8.id
@@ -23,8 +35,8 @@ module "component" {
   instance_type          = "t2.micro"
   vpc_security_group_ids = [var.component_sg_id]
   #subnet_id             = element(split(",", data.aws_ssm_parameter.private_subnet_ids.value), 0)
-  subnet_id              = element(var.private_subnet_ids, 0)
-  iam_instance_profile   = var.iam_instance_profile
+  subnet_id            = element(var.private_subnet_ids, 0)
+  iam_instance_profile = var.iam_instance_profile
   tags = merge(
     var.commn_tags,
     var.tags
