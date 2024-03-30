@@ -67,7 +67,7 @@ resource "null_resource" "component" {
     # Bootstrap script called with private_ip of each node in the cluster
     inline = [
       "sudo chmod +x /tmp/bootstrap.sh",
-      "sudo sh /tmp/bootstrap.sh ${var.tags.Component} ${var.environment}"
+      "sudo sh /tmp/bootstrap.sh ${var.tags.Component} ${var.environment} ${var.app_version}"
     ]
   }
   depends_on = [module.component]
